@@ -80,7 +80,8 @@ class TfidfRetriever(BaseRetriever):
             )
 
         # get actual content for the top candidates
-        paragraphs = list(df_sliced.text.values)
+#         paragraphs = list(df_sliced.text.values)
+        paragraphs = df_sliced.to_dict('records')
         meta_data = [{"document_id": row["document_id"], "paragraph_id": row["paragraph_id"],"document_name":row["document_name"]}
                      for idx, row in df_sliced.iterrows()]
 
