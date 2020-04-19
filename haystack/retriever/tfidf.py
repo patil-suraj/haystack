@@ -3,6 +3,7 @@ from collections import OrderedDict, namedtuple
 
 import pandas as pd
 from haystack.retriever.base import BaseRetriever
+from haystack.database.base import Document
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
@@ -80,12 +81,11 @@ class TfidfRetriever(BaseRetriever):
             )
 
         # get actual content for the top candidates
-#         paragraphs = list(df_sliced.text.values)
-        paragraphs = list(df_sliced.iterrows())
-        paragraphs = [Paragraph(document_id=row["document_id"],document_name=row["document_name"],paragraph_id=row["paragraph_id"], text=row["text"]) 
-                      for idx, row in df_sliced.iterrows()]
+        paragraphs = list(df_sliced.text.values)
         meta_data = [{"document_id": row["document_id"], "paragraph_id": row["paragraph_id"],"document_name":row["document_name"]}
                      for idx, row in df_sliced.iterrows()]
+        
+        docs = [Document(id=row["document_id"], text=text, meta=row) for text, row in zip(paragraphs, meta_data)]
 
         return paragraphs, meta_data
 
