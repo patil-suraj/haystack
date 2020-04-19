@@ -44,7 +44,7 @@ class Finder:
             candidate_doc_ids = None
 
         # 2) Apply retriever to get fast candidate documents
-        documents = self.retriever.retrieve(question, top_k=top_k_retriever, candidate_doc_ids=candidate_doc_ids)
+        documents, meta = self.retriever.retrieve(question, top_k=top_k_retriever, candidate_doc_ids=candidate_doc_ids)
 
         if len(documents) == 0:
             logger.info("Retriever did not return any documents. Skipping reader ...")
