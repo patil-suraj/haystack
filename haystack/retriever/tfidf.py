@@ -87,7 +87,7 @@ class TfidfRetriever(BaseRetriever):
         
         docs = [Document(id=row["document_id"], text=text, meta=row) for text, row in zip(paragraphs, meta_data)]
 
-        return paragraphs, meta_data
+        return docs, meta_data
 
     def fit(self):
         self.df = pd.DataFrame.from_dict(self.paragraphs)
